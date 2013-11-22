@@ -22,17 +22,20 @@ protected:
     unsigned long functionCount;
     boolean activated;
     unsigned long functionTimer;
+    String name;
     
 public:
     ElementDo();
+    ElementDo(String name);
     void activateObservers();
     void setFunctionElement(Element *functionElement);
     void setObserver(ElementDo *observer, int number);
     void deleteObserver();
     void setVelocity(int velocity);
     void setCounts(int counts);
+    String getName();
 
-    void activate();
+    virtual void activate();
     void setLastObservers() {}    //code ging nachdem ich diese funktion auskommentiert hatte... evt. hat das virtual void ohne 0=; gestört
     virtual void now();
 };
@@ -42,12 +45,11 @@ class ElementDoSetColor : public ElementDo
 private:
     Farbe targetColor;
 public:
-    ElementDoSetColor(Farbe targetColor) : ElementDo()
+    ElementDoSetColor(Farbe targetColor) : ElementDo("SetColor")
     {
         this->targetColor = targetColor;
     }
     void now();
-//    void activate();
 };
 
 class ElementDoSetElementTargetColor : public ElementDo
@@ -55,13 +57,12 @@ class ElementDoSetElementTargetColor : public ElementDo
 private:
     Element *targetElement;
 public:
-    ElementDoSetElementTargetColor(Element *targetElement) : ElementDo()
+    ElementDoSetElementTargetColor(Element *targetElement) : ElementDo("SetElementTargetColor")
     {
         this->targetElement =  targetElement;
     }
     
     void now();
-//    void activate();
 };
 
 class ElementDoSetTargetColor : public ElementDo
@@ -69,13 +70,12 @@ class ElementDoSetTargetColor : public ElementDo
 private:
     Farbe targetColor;
 public:
-    ElementDoSetTargetColor(Farbe targetColor) : ElementDo()
+    ElementDoSetTargetColor(Farbe targetColor) : ElementDo("SetTargetColor")
     {
         this->targetColor = targetColor;
     }
     
     void now();
-//    void activate();
 };
 
 class ElementDoBlink : public ElementDo
@@ -84,13 +84,12 @@ private:
 	int velocity;
 	int counts;
 public:
-    ElementDoBlink(int velocity, int counts) : ElementDo()
+    ElementDoBlink(int velocity, int counts) : ElementDo("Blink")
 	{
 		this->velocity = velocity;
 		this->counts = counts;
 	}
     void now();
-//    void activate();
 };
 
 class ElementDoPulseUp : public ElementDo
@@ -100,13 +99,12 @@ private:
 	int counts;
 
 public:
-    ElementDoPulseUp(int velocity, int counts) : ElementDo()
+    ElementDoPulseUp(int velocity, int counts) : ElementDo("PulseUp")
 	{
 		this->velocity = velocity;
 		this->counts = counts;
 	}
     void now();
-//    void activate();
 };
 
 class ElementDoPulseDown : public ElementDo
@@ -115,14 +113,13 @@ private:
 	int velocity;
 	int counts;
 public:
-    ElementDoPulseDown(int velocity, int counts) : ElementDo()
+    ElementDoPulseDown(int velocity, int counts) : ElementDo("PulseDown")
 	{
 		this->velocity = velocity;
 		this->counts = counts;
 
 	}
     void now();
-//    void activate();
 };
 
 class ElementDoGoToColor : public ElementDo
@@ -131,7 +128,7 @@ private:
 	int velocity;
 	int counts;
 public:
-    ElementDoGoToColor(int velocity, int counts) : ElementDo()
+    ElementDoGoToColor(int velocity, int counts) : ElementDo("GoToColor")
 	{
 		this->velocity = velocity;		
 		this->counts = counts;
@@ -148,7 +145,7 @@ private:
 	int activationCount;
 	
 public:
-	ElementDoLastElement() : ElementDo()
+	ElementDoLastElement() : ElementDo("LastElement")
 	{
 		activationCount = 0;
 	}
@@ -156,17 +153,19 @@ public:
 	void setLastObservers(ElementDo *raute, ElementDo *let, ElementDo *freedom, ElementDo *ring);
 };
 
-// class ElementDoNothing : public ElementDo
-// {
-// private:
-// 	delay
-// public:
-//     ElementDoNothing(unsigned long delay) : ElementDo()
-//     {
-//         functionCount = delay;
-//     }
-//     void now();
-// };
+ class ElementDoNothing : public ElementDo
+ {
+ private:
+ 	unsigned long delay;
+        int count;
+ public:
+     ElementDoNothing(unsigned long delay) : ElementDo("Nothing")
+     {
+         this->delay = delay;
+         count = -1;
+     }
+     void now();
+ };
 
 #endif	/* ELEMENTDO_H */
 

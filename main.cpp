@@ -2,7 +2,7 @@
 #include "Element.h"
 #include "ElementDo.h"
 
-#define ARRAY_SIZE 6
+#define ARRAY_SIZE 7
 
 
 Element raute(2,3,4);
@@ -28,12 +28,14 @@ void ringSetup();
 void setArrayFunctionElement(ElementDo **doArray, Element *elem, int anzahl);
 void setArrayObservers(ElementDo **doArray, int anzahl);
 
-
+//HardwareSerial Serial;
 
 
 void setup()
 {
-//  Serial.begin(9600);
+  Serial.begin(9600);
+  
+  delay(1000);
   pulseFULL = 86;
   goToColorFULL = 255;
 
@@ -88,7 +90,8 @@ void rauteSetup()
   rauteArray[2] = new ElementDoBlink                    (random(250), 3);
   rauteArray[3] = new ElementDoBlink                    (random(250), 3);
   rauteArray[4] = new ElementDoPulseDown                (50, pulseFULL);
-  rauteArray[5] = new ElementDoPulseUp                  (50, pulseFULL);
+  rauteArray[5] = new ElementDoNothing                  (5000);
+  rauteArray[6] = new ElementDoPulseUp                  (50, pulseFULL);
 
   setArrayFunctionElement(rauteArray, &raute, ARRAY_SIZE);
   setArrayObservers(rauteArray, ARRAY_SIZE);
@@ -105,7 +108,8 @@ void letSetup()
   letArray[2] = new ElementDoBlink                    (random(250), 3);
   letArray[3] = new ElementDoBlink                    (random(250), 3);
   letArray[4] = new ElementDoPulseDown                (50, pulseFULL);
-  letArray[5] = new ElementDoPulseUp                (50, pulseFULL);
+  letArray[5] = new ElementDoNothing                  (5000);
+  letArray[6] = new ElementDoPulseUp                  (50, pulseFULL);
  
   setArrayFunctionElement(letArray, &let, ARRAY_SIZE);
   setArrayObservers(letArray, ARRAY_SIZE);
@@ -124,7 +128,8 @@ void freedomSetup()
   freedomArray[2] = new ElementDoBlink                    (random(250), 3);
   freedomArray[3] = new ElementDoBlink                    (random(250), 3);
   freedomArray[4] = new ElementDoPulseDown                (50, pulseFULL);
-  freedomArray[5] = new ElementDoPulseUp                (50, pulseFULL);
+  freedomArray[5] = new ElementDoNothing                  (5000);
+  freedomArray[6] = new ElementDoPulseUp                  (50, pulseFULL);
   
   setArrayFunctionElement(freedomArray, &freedom, ARRAY_SIZE);
   setArrayObservers(freedomArray, ARRAY_SIZE);
@@ -143,7 +148,8 @@ void ringSetup()
   ringArray[2] = new ElementDoBlink                    (random(250), 3);
   ringArray[3] = new ElementDoBlink                    (random(250), 3);
   ringArray[4] = new ElementDoPulseDown                (50, pulseFULL);
-  ringArray[5] = new ElementDoPulseUp                (50, pulseFULL);
+  ringArray[5] = new ElementDoNothing                  (5000);
+  ringArray[6] = new ElementDoPulseUp                  (50, pulseFULL);
 
   setArrayFunctionElement(ringArray, &ring, ARRAY_SIZE);
   setArrayObservers(ringArray, ARRAY_SIZE);

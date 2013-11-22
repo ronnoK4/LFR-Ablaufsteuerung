@@ -13,10 +13,34 @@ ElementDo::ElementDo()
     functionCount = 0;
     activated = false;
     functionTimer = millis();
+    for (int i = 0; i<3; i++)
+    {
+        observers[i] = NULL;
+    }
+    name = "default";
+}
+ElementDo::ElementDo(String name)
+{
+    functionCount = 0;
+    activated = false;
+    functionTimer = millis();
+    for (int i = 0; i<3; i++)
+    {
+        observers[i] = NULL;
+    }
+    this->name = name;
+}
+String ElementDo::getName()
+{
+    return name;
 }
 void ElementDo::activate()
 {
 	activated = true;
+        Serial.print(getName());
+        Serial.print("activated");
+        Serial.println(activated);
+
 }
 void ElementDo::activateObservers()
 {
@@ -25,6 +49,8 @@ void ElementDo::activateObservers()
         if (observers[i])
         {
             observers[i]->activate();
+            Serial.print("activateObserver-> ");
+            Serial.println(observers[i]->getName());
         }
     }
 }
@@ -181,10 +207,12 @@ void ElementDoLastElement::setLastObservers(ElementDo *raute, ElementDo *let, El
 	this->let = let;
 	this->freedom = freedom;
 	this->ring = ring;
+        
+        Serial.println("setLastObservers");
 }
 void ElementDoLastElement::activate()
 {
-//  	Serial.println("lastActivate");
+  	Serial.println("lastActivate");
 
 	activationCount++;
 	if(activationCount>3)
@@ -196,22 +224,22 @@ void ElementDoLastElement::activate()
 		activationCount = 0;
 	}
 }
-// void ElementDoNothing::now()
-// {
-//     if(activated)
-//     {
-//         if(functionTimer+velocity < millis())
-//         {
-//             if(functionCount > 0)
-//             {
-//                 activateObservers();
-//                 activated = false;
-//                 functionCount = -1;
-//             }
-//             functionTimer = millis();
-//             functionCount++;
-//         }
-//     }
-// }
+ void ElementDoNothing::now()
+ {
+     if(activated)
+     {
+         if(functionTimer+delay < millis())
+         {
+             if(count > 0)
+             {
+                 activateObservers();
+                 activated = false;
+                 count = -1;
+             }
+             functionTimer = millis();
+             count++;
+         }
+     }
+ }
 
 
