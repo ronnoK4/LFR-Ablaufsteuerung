@@ -7,11 +7,12 @@
 
 #include "Element.h"
 
-Element::Element(int rotKanal, int gruenKanal, int blauKanal)
+Element::Element(int rotKanal, int gruenKanal, int blauKanal, String name)
 {
     this->rotKanal = rotKanal;
     this->gruenKanal = gruenKanal;
     this->blauKanal = blauKanal;
+    this->name = name;
     
     aufBlinken = 0;
     
@@ -99,6 +100,31 @@ void Element::setTargetColor(Farbe target)
     fGruen = farbe.gruen;
     fBlau = farbe.blau;
 }
+void Element::setTargetColor(int rot, int gruen, int blau)
+{
+    target.rot = rot;
+    target.gruen = gruen;
+    target.blau = blau;
+    distRot = target.rot - farbe.rot;
+    distGruen = target.gruen - farbe.gruen;
+    distBlau = target.blau - farbe.blau;
+    
+    fRot = farbe.rot;
+    fGruen = farbe.gruen;
+    fBlau = farbe.blau;
+}
+void Element::targetRandomColor()
+{
+    target.randomColor();
+    
+    distRot = target.rot - farbe.rot;
+    distGruen = target.gruen - farbe.gruen;
+    distBlau = target.blau - farbe.blau;
+    
+    fRot = farbe.rot;
+    fGruen = farbe.gruen;
+    fBlau = farbe.blau;
+}
 void Element::goToColor()
 {
     fRot += distRot/255;
@@ -107,6 +133,8 @@ void Element::goToColor()
     farbe.rot = fRot;
     farbe.gruen = fGruen;
     farbe.blau = fBlau;
+    
+    farbe.printFarbe();
 
     leuchten();
 }
@@ -118,6 +146,10 @@ int Element::getBrightness()
 {
     return farbe.brightness;
 }
+String Element::getName()
+{
+    return name;
+}
 void Element::setFarbe(int r, int g, int b)
 {
     farbe.rot = r;
@@ -128,11 +160,18 @@ void Element::setFarbe(Farbe neueFarbe)
 {
     farbe = neueFarbe;
 }
+void Element::farbeRandomColor()
+{
+    farbe.randomColor();
+}
 void Element::setBrightness(int wert)
 {
     if (0<=wert && wert<=255)
     {
         farbe.brightness = wert;
+    }else
+    {
+        Serial.println("===================== UNGUELTIGER WER FUER BRIGHTNESS!!!");
     }
 }
 void Element::increaseBrightness()

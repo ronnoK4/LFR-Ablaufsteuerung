@@ -13,7 +13,7 @@ ElementDo::ElementDo()
     functionCount = 0;
     activated = false;
     functionTimer = millis();
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<4; i++)
     {
         observers[i] = NULL;
     }
@@ -24,7 +24,7 @@ ElementDo::ElementDo(String name)
     functionCount = 0;
     activated = false;
     functionTimer = millis();
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<4; i++)
     {
         observers[i] = NULL;
     }
@@ -37,20 +37,20 @@ String ElementDo::getName()
 void ElementDo::activate()
 {
 	activated = true;
+        Serial.print(functionElement->getName());
+        Serial.print("::");
         Serial.print(getName());
-        Serial.print("activated");
+        Serial.print(" ->activated");
         Serial.println(activated);
 
 }
 void ElementDo::activateObservers()
 {
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<4; i++)
     {
         if (observers[i])
         {
             observers[i]->activate();
-            Serial.print("activateObserver-> ");
-            Serial.println(observers[i]->getName());
         }
     }
 }
@@ -65,52 +65,67 @@ void ElementDo::setObserver(ElementDo *observer, int number)
 }
 void ElementDo::deleteObserver()
 {
-	delete observers[0];
+	observers[0] = NULL;
 }
-
-void ElementDo::now() { }
-
 void ElementDoSetColor::now()
 {
     if(activated)
     {
-        functionElement->setFarbe(targetColor);
-        functionElement->leuchten();
-        activateObservers();
-        activated = false;
+        switch(mode)
+        {
+            case(0):
+                functionElement->farbeRandomColor();
+                break;
+            case(1):
+                functionElement->setFarbe(rot, gruen, blau);
+                break;
+            case(2):
+                functionElement->setFarbe(targetElement->getFarbe());
+                break;  
+            default:
+                functionElement->setFarbe(255, 255, 255);
+                break;
+        }
+            functionElement->leuchten();
+            activateObservers();
+            activated = false;
+            functionElement->farbe.printFarbe();
     }
 }
-//void ElementDoSetColor::activate()
-//{
-//	activated = true;
-//}
-void ElementDoSetElementTargetColor::now()
-{
-    if(activated)
-    {   
-        functionElement->setTargetColor(targetElement->getFarbe());
-        functionElement->leuchten();
-        activateObservers();
-        activated = false;
-    }
-}
-//void ElementDoSetElementTargetColor::activate()
-//{
-//	activated = true;
-//}
 void ElementDoSetTargetColor::now()
 {
     if(activated)
     {
-        functionElement->setTargetColor(targetColor);	
-	    activateObservers();
+        switch(mode)
+        {
+            case(0):
+                functionElement->targetRandomColor();
+                break;
+            case(1):
+                functionElement->setTargetColor(rot, gruen, blau);
+                break;
+            case(2):
+                functionElement->setTargetColor(targetElement->getFarbe());
+                break;
+            default:
+                functionElement->setTargetColor(255, 255, 255);
+                break;
+        }
+        functionElement->target.printFarbe();
+            activateObservers();
+            activated = false;
+    }
+}
+void ElementDoSetBrightness::now()
+{
+    if(activated)
+    {   
+        functionElement->setBrightness(brightness);
+        functionElement->leuchten();
+        activateObservers();
         activated = false;
     }
 }
-//void ElementDoSetTargetColor::activate()
-//{
-//	activated = true;
-//}
 void ElementDoBlink::now()
 {
     if(activated)
@@ -122,7 +137,6 @@ void ElementDoBlink::now()
             functionTimer = millis();
             if(functionCount > counts)
             {
-				// Serial.println("passed");
                 activateObservers();
                 
                 activated = false;
@@ -131,16 +145,10 @@ void ElementDoBlink::now()
         }
     }
 }
-//void ElementDoBlink::activate()
-//{
-//	activated = true;
-//}
 void ElementDoPulseUp::now()
 {
     if(activated)
-    {  
-//		Serial.println("pulseUp");
-	
+    {  	
         if(functionTimer+velocity < millis())
         {
             functionElement->pulseUp();
@@ -151,16 +159,10 @@ void ElementDoPulseUp::now()
                 activateObservers();
                 activated = 0;
                 functionCount = 0;
-  				
-//				Serial.println("pulseUp->functionCount");
             }
         }
     }
 }
-//void ElementDoPulseUp::activate()
-//{
-//	activated = true;
-//}
 void ElementDoPulseDown::now()
 {
     if(activated)
@@ -179,10 +181,6 @@ void ElementDoPulseDown::now()
         }
     }
 }
-//void ElementDoPulseDown::activate()
-//{
-//	activated = true;
-//}
 void ElementDoGoToColor::now()
 {
     if(activated)
@@ -241,5 +239,3 @@ void ElementDoLastElement::activate()
          }
      }
  }
-
-

@@ -14,8 +14,7 @@
 class Element
 {
   private:
-    Farbe farbe;
-    Farbe target;
+    String name;
     float distRot;
     float distGruen;
     float distBlau;
@@ -31,9 +30,11 @@ class Element
     int aufBlinken;
     
   public:
-    
+    Farbe farbe;
+    Farbe target;
+
     Element() {};
-    Element(int rotKanal, int gruenKanal, int blauKanal);
+    Element(int rotKanal, int gruenKanal, int blauKanal, String name);
     void setzeKanal(int rotKanal, int gruenKanal, int blauKanal);
     void setzeFarbe(int rot, int gruen, int blau);
     void leuchten();
@@ -45,10 +46,14 @@ class Element
     
     Farbe getFarbe();
     int getBrightness();
+    String getName();
     
     void setFarbe(int r, int g, int b);
     void setFarbe(Farbe neueFarbe);
+    void farbeRandomColor();
     void setTargetColor(Farbe target);
+    void setTargetColor(int rot, int gruen, int blau);
+    void targetRandomColor();
     void setBrightness(int wert);
     void increaseBrightness();
     void decreaseBrightness();

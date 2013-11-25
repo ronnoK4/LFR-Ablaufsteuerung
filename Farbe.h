@@ -18,6 +18,7 @@ class Farbe
     
     Farbe();
     void randomColor();
+    void printFarbe();
 };
 
 #endif	/* FARBE_H */

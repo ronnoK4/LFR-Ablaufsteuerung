@@ -26,3 +26,13 @@ void Farbe::randomColor()
         randomColor();
     }
 }
+
+void Farbe::printFarbe()
+{
+    Serial.print("==================");
+    Serial.print(rot);
+    Serial.print("-");
+    Serial.print(gruen);
+    Serial.print("-");
+    Serial.println(blau);    
+}

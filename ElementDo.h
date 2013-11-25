@@ -18,7 +18,7 @@ private:
 
 protected:
     Element *functionElement;
-    ElementDo *observers[3];
+    ElementDo *observers[4];
     unsigned long functionCount;
     boolean activated;
     unsigned long functionTimer;
@@ -37,44 +37,75 @@ public:
 
     virtual void activate();
     void setLastObservers() {}    //code ging nachdem ich diese funktion auskommentiert hatte... evt. hat das virtual void ohne 0=; gestört
-    virtual void now();
+    virtual void now() {}
 };
 
 class ElementDoSetColor : public ElementDo
 {
 private:
-    Farbe targetColor;
-public:
-    ElementDoSetColor(Farbe targetColor) : ElementDo("SetColor")
-    {
-        this->targetColor = targetColor;
-    }
-    void now();
-};
-
-class ElementDoSetElementTargetColor : public ElementDo
-{
-private:
     Element *targetElement;
+    int rot;
+    int gruen;
+    int blau;
+    int mode;
 public:
-    ElementDoSetElementTargetColor(Element *targetElement) : ElementDo("SetElementTargetColor")
+    ElementDoSetColor() : ElementDo("SetColor-random")
     {
-        this->targetElement =  targetElement;
+        mode = 0;
     }
-    
+    ElementDoSetColor(int rot, int gruen,  int blau) : ElementDo("SetColor-RGB")
+    {
+        mode = 1;
+        this->rot = rot;
+        this->gruen = gruen;
+        this->blau = blau;
+    }
+    ElementDoSetColor(Element *targetElement) : ElementDo("SetColor-Element")
+    {
+        mode = 2;
+        this->targetElement = targetElement;
+    }
+
     void now();
 };
 
 class ElementDoSetTargetColor : public ElementDo
 {
 private:
-    Farbe targetColor;
+    int rot;
+    int gruen;
+    int blau;
+    Element *targetElement;
+    int mode;
 public:
-    ElementDoSetTargetColor(Farbe targetColor) : ElementDo("SetTargetColor")
+    ElementDoSetTargetColor() : ElementDo("SetTargetColor-random")
     {
-        this->targetColor = targetColor;
+        mode = 0;
+    }    
+    ElementDoSetTargetColor(int rot, int gruen, int blau) : ElementDo("SetTargetColor-RGB")
+    {
+        mode = 1;
+        this->rot = rot;
+        this->gruen = gruen;
+        this->blau = blau;
     }
-    
+    ElementDoSetTargetColor(Element *targetElement) : ElementDo("SetTargetColor-Element")
+    {
+        mode = 2;
+        this->targetElement =  targetElement;
+    }   
+    void now();
+};
+
+class ElementDoSetBrightness : public ElementDo
+{
+private:
+    int brightness;
+public:
+    ElementDoSetBrightness(int brightness) : ElementDo("SetBrightness")
+    {
+        this->brightness = brightness;
+    } 
     void now();
 };
 
@@ -86,7 +117,7 @@ private:
 public:
     ElementDoBlink(int velocity, int counts) : ElementDo("Blink")
 	{
-		this->velocity = velocity;
+                this->velocity = velocity;
 		this->counts = counts;
 	}
     void now();
