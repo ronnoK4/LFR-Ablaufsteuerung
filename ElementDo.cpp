@@ -111,7 +111,11 @@ void ElementDoSetTargetColor::now()
                 functionElement->setTargetColor(255, 255, 255);
                 break;
         }
+        Serial.print("===");
+        Serial.print(functionElement->getName());
+        Serial.print("===WURDE AUF");
         functionElement->target.printFarbe();
+        Serial.print("===GESETZT");
             activateObservers();
             activated = false;
     }
@@ -138,7 +142,6 @@ void ElementDoBlink::now()
             if(functionCount > counts)
             {
                 activateObservers();
-                
                 activated = false;
                 functionCount = 0;
             }
@@ -195,6 +198,9 @@ void ElementDoGoToColor::now()
                 activateObservers();
                 activated = false;
                 functionCount = 0;
+                Serial.print("===");
+                Serial.print(functionElement->getName());
+                functionElement->farbe.printFarbe();
             }
         }
     }

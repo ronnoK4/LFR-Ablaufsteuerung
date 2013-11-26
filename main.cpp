@@ -120,9 +120,12 @@ void rauteSetup()
   rauteArray[3]->deleteObserver();
   rauteArray[21]->setObserver(rauteArray[23], 1);
   rauteArray[22]->deleteObserver();  
-  rauteArray[28]->setObserver(letArray[6], 1);
-  rauteArray[28]->setObserver(freedomArray[5], 2);
-  rauteArray[28]->setObserver(ringArray[6], 3);
+  rauteArray[4]->setObserver(letArray[6], 1);
+  rauteArray[4]->setObserver(freedomArray[5], 2);
+  rauteArray[4]->setObserver(ringArray[6], 3);
+  rauteArray[27]->setObserver(letArray[7], 1);
+  rauteArray[27]->setObserver(freedomArray[6], 2);
+  rauteArray[27]->setObserver(ringArray[7], 3);
 }
 
 void letSetup()
@@ -167,8 +170,9 @@ void letSetup()
   setArrayObservers(letArray, ARRAY_SIZE);
   letArray[0]->activate();
   
-  letArray[4]->setObserver(freedomArray[4], 0);       //freedom soll nach raute und ring auch langsam runterfahren
+  letArray[4]->deleteObserver();       //freedom soll nach raute und ring auch langsam runterfahren
   letArray[5]->deleteObserver();
+  letArray[6]->deleteObserver();
 }
 
 void freedomSetup()
@@ -216,6 +220,7 @@ void freedomSetup()
   freedomArray[3]->deleteObserver();                       //wird von letArray[4] gesetzt
   freedomArray[4]->setObserver(letArray[5], 0);            //let und ring sollen ganz runter pulsen
   freedomArray[4]->setObserver(ringArray[5], 1);
+  freedomArray[5]->deleteObserver();
 }
 
 void ringSetup()
@@ -262,6 +267,7 @@ void ringSetup()
   
   ringArray[4]->setObserver(freedomArray[4], 0);        //freedom soll ganz runter pulsen
   ringArray[5]->setObserver(rauteArray[4], 0);          //raute blinksequenz startet
+  ringArray[6]->deleteObserver();
 }
 
 

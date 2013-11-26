@@ -127,14 +127,14 @@ void Element::targetRandomColor()
 }
 void Element::goToColor()
 {
-    fRot += distRot/255;
-    fGruen += distGruen/255;
-    fBlau += distBlau/255;
+    fRot += distRot/256;
+    fGruen += distGruen/256;
+    fBlau += distBlau/256;
     farbe.rot = fRot;
     farbe.gruen = fGruen;
     farbe.blau = fBlau;
     
-    farbe.printFarbe();
+//    farbe.printFarbe();
 
     leuchten();
 }
