@@ -148,6 +148,27 @@ void ElementDoBlink::now()
         }
     }
 }
+void ElementDoBlinkToSmooth::now()
+{
+    if(activated)
+    {
+        if(functionTimer+velocity < millis())
+        {   
+            acceleration = velocity/30;
+            functionElement->blinken();
+            functionCount++;
+            functionTimer = millis();
+            velocity -= acceleration;
+            
+            if(velocity < 10)
+            {
+                activateObservers();
+                activated = false;
+                velocity = velOriginal;
+            }
+        }
+    }
+}
 void ElementDoPulseUp::now()
 {
     if(activated)

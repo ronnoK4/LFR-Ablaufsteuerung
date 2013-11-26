@@ -2,7 +2,7 @@
 #include "Element.h"
 #include "ElementDo.h"
 
-#define ARRAY_SIZE 32
+#define ARRAY_SIZE 18
 
 
 Element raute(2,3,4, "RAUTE");
@@ -85,33 +85,19 @@ void rauteSetup()
   rauteArray[2] = new ElementDoBlink                    (random(250), 3);
   rauteArray[3] = new ElementDoBlink                    (random(250), 3);
   rauteArray[4] = new ElementDoNothing                  (3000);
-  rauteArray[5] = new ElementDoBlink                    (400, 3);              //anfang von blinksequenz
-  rauteArray[6] = new ElementDoSetColor                 ();
-  rauteArray[7] = new ElementDoBlink                    (300, 4);
-  rauteArray[8] = new ElementDoSetColor                 ();
-  rauteArray[9] = new ElementDoBlink                    (250,6);
-  rauteArray[10] = new ElementDoSetColor                ();
-  rauteArray[11] = new ElementDoBlink                   (200,8);
-  rauteArray[12] = new ElementDoSetColor                ();
-  rauteArray[13] = new ElementDoBlink                   (150,10);
-  rauteArray[14] = new ElementDoSetColor                ();
-  rauteArray[15] = new ElementDoBlink                   (100,12);
-  rauteArray[16] = new ElementDoSetColor                ();
-  rauteArray[17] = new ElementDoBlink                   (75,18);
-  rauteArray[18] = new ElementDoBlink                   (50,20);
-  rauteArray[19] = new ElementDoBlink                   (20,50);
-  rauteArray[20] = new ElementDoSetBrightness           (127);
-  rauteArray[21] = new ElementDoSetTargetColor          ();                    //setzen einer zufallsfarbe  
-  rauteArray[22] = new ElementDoGoToColor               (20, goToColorFULL);
-  rauteArray[23] = new ElementDoPulseDown               (30, pulseFULL*0.8);
-  rauteArray[24] = new ElementDoPulseUp                 (30, pulseFULL*0.8);
-  rauteArray[25] = new ElementDoPulseDown               (30, pulseFULL*0.8);
-  rauteArray[26] = new ElementDoPulseUp                 (30, pulseFULL*0.8);
-  rauteArray[27] = new ElementDoPulseDown               (30, pulseFULL);
-  rauteArray[28] = new ElementDoSetTargetColor          (&let);
-  rauteArray[29] = new ElementDoNothing                 (random(1500));
-  rauteArray[30] = new ElementDoPulseUp                 (random(10), pulseFULL);
-  rauteArray[31] = new ElementDoGoToColor               (15, goToColorFULL);
+  rauteArray[5] = new ElementDoBlinkToSmooth            (800);
+  rauteArray[6] = new ElementDoSetBrightness            (127);
+  rauteArray[7] = new ElementDoSetTargetColor           ();                    //setzen einer zufallsfarbe  
+  rauteArray[8] = new ElementDoGoToColor                (20, goToColorFULL);
+  rauteArray[9] = new ElementDoPulseDown                (30, pulseFULL*0.8);
+  rauteArray[10] = new ElementDoPulseUp                 (30, pulseFULL*0.8);
+  rauteArray[11] = new ElementDoPulseDown               (30, pulseFULL*0.8);
+  rauteArray[12] = new ElementDoPulseUp                 (30, pulseFULL*0.8);
+  rauteArray[13] = new ElementDoPulseDown               (30, pulseFULL);
+  rauteArray[14] = new ElementDoSetTargetColor          (&let);
+  rauteArray[15] = new ElementDoNothing                 (random(1500));
+  rauteArray[16] = new ElementDoPulseUp                 (random(10), pulseFULL);
+  rauteArray[17] = new ElementDoGoToColor               (15, goToColorFULL);
 
   setArrayFunctionElement(rauteArray, &raute, ARRAY_SIZE);
   setArrayObservers(rauteArray, ARRAY_SIZE);
@@ -123,9 +109,9 @@ void rauteSetup()
   rauteArray[4]->setObserver(letArray[6], 1);
   rauteArray[4]->setObserver(freedomArray[5], 2);
   rauteArray[4]->setObserver(ringArray[6], 3);
-  rauteArray[27]->setObserver(letArray[7], 1);
-  rauteArray[27]->setObserver(freedomArray[6], 2);
-  rauteArray[27]->setObserver(ringArray[7], 3);
+  rauteArray[14]->setObserver(letArray[7], 1);
+  rauteArray[14]->setObserver(freedomArray[6], 2);
+  rauteArray[14]->setObserver(ringArray[7], 3);
 }
 
 void letSetup()
@@ -151,20 +137,6 @@ void letSetup()
   letArray[15] = new ElementDoNothing                 (1);
   letArray[16] = new ElementDoNothing                 (1);
   letArray[17] = new ElementDoNothing                 (1);
-  letArray[18] = new ElementDoNothing                 (1);
-  letArray[19] = new ElementDoNothing                 (1);
-  letArray[20] = new ElementDoNothing                 (1);
-  letArray[21] = new ElementDoNothing                 (1);
-  letArray[22] = new ElementDoNothing                 (1);
-  letArray[23] = new ElementDoNothing                 (1);
-  letArray[24] = new ElementDoNothing                 (1);
-  letArray[25] = new ElementDoNothing                 (1);
-  letArray[26] = new ElementDoNothing                 (1);
-  letArray[27] = new ElementDoNothing                 (1);
-  letArray[28] = new ElementDoNothing                 (1);
-  letArray[29] = new ElementDoNothing                 (1);
-  letArray[30] = new ElementDoNothing                 (1);
-  letArray[31] = new ElementDoSetBrightness           (255);  
   
   setArrayFunctionElement(letArray, &let, ARRAY_SIZE);
   setArrayObservers(letArray, ARRAY_SIZE);
@@ -198,20 +170,7 @@ void freedomSetup()
   freedomArray[15] = new ElementDoNothing                 (1);
   freedomArray[16] = new ElementDoNothing                 (1);
   freedomArray[17] = new ElementDoNothing                 (1);
-  freedomArray[18] = new ElementDoNothing                 (1);
-  freedomArray[19] = new ElementDoNothing                 (1);
-  freedomArray[20] = new ElementDoNothing                 (1);
-  freedomArray[21] = new ElementDoNothing                 (1);
-  freedomArray[22] = new ElementDoNothing                 (1);
-  freedomArray[23] = new ElementDoNothing                 (1);
-  freedomArray[24] = new ElementDoNothing                 (1);
-  freedomArray[25] = new ElementDoNothing                 (1);
-  freedomArray[26] = new ElementDoNothing                 (1);
-  freedomArray[27] = new ElementDoNothing                 (1);
-  freedomArray[28] = new ElementDoNothing                 (1);
-  freedomArray[29] = new ElementDoNothing                 (1);
-  freedomArray[30] = new ElementDoNothing                 (1);
-  freedomArray[31] = new ElementDoSetBrightness           (255);  
+
   
   setArrayFunctionElement(freedomArray, &freedom, ARRAY_SIZE);
   setArrayObservers(freedomArray, ARRAY_SIZE);
@@ -246,20 +205,6 @@ void ringSetup()
   ringArray[15] = new ElementDoNothing                 (1);
   ringArray[16] = new ElementDoNothing                 (1);
   ringArray[17] = new ElementDoNothing                 (1);
-  ringArray[18] = new ElementDoNothing                 (1);
-  ringArray[19] = new ElementDoNothing                 (1);
-  ringArray[20] = new ElementDoNothing                 (1);
-  ringArray[21] = new ElementDoNothing                 (1);
-  ringArray[22] = new ElementDoNothing                 (1);
-  ringArray[23] = new ElementDoNothing                 (1);
-  ringArray[24] = new ElementDoNothing                 (1);
-  ringArray[25] = new ElementDoNothing                 (1);
-  ringArray[26] = new ElementDoNothing                 (1);
-  ringArray[27] = new ElementDoNothing                 (1);
-  ringArray[28] = new ElementDoNothing                 (1);
-  ringArray[29] = new ElementDoNothing                 (1);
-  ringArray[30] = new ElementDoNothing                 (1);
-  ringArray[31] = new ElementDoSetBrightness           (255);
   
   setArrayFunctionElement(ringArray, &ring, ARRAY_SIZE);
   setArrayObservers(ringArray, ARRAY_SIZE);

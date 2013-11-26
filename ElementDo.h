@@ -122,7 +122,22 @@ public:
 	}
     void now();
 };
+class ElementDoBlinkToSmooth : public ElementDo
+{
+private:
 
+	int velOriginal;
+        double velocity;
+        double acceleration;
+public:
+
+    ElementDoBlinkToSmooth(int velocity) : ElementDo("BlinkToSmooth")
+	{
+                this->velocity = velocity;
+		this->velOriginal = velocity;
+	}
+    void now();
+};
 class ElementDoPulseUp : public ElementDo
 {
 private:
