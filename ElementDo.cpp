@@ -67,6 +67,9 @@ void ElementDo::deleteObserver()
 {
 	observers[0] = NULL;
 }
+/**
+ * 
+ */
 void ElementDoSetColor::now()
 {
     if(activated)
@@ -102,15 +105,30 @@ void ElementDoSetTargetColor::now()
                 functionElement->targetRandomColor();
                 break;
             case(1):
+            functionElement->targetHardRandomColor();
+            break;
+            case(2):
                 functionElement->setTargetColor(rot, gruen, blau);
                 break;
-            case(2):
+            case(3):
                 functionElement->setTargetColor(targetElement->getFarbe());
                 break;
+            case(4):
+            {
+                startFarbe = startElement->getTargetColor();
+                zielFarbe = targetElement->getTargetColor();
+                startFarbe.rot += ((zielFarbe.rot - startFarbe.rot)*station)/3;
+                startFarbe.gruen += ((zielFarbe.gruen - startFarbe.gruen)*station)/3;
+                startFarbe.blau += ((zielFarbe.blau - startFarbe.blau)*station)/3;
+
+                functionElement->setTargetColor(startFarbe);
+            }
+            break;
             default:
                 functionElement->setTargetColor(255, 255, 255);
                 break;
         }
+        
         Serial.print("===");
         Serial.print(functionElement->getName());
         Serial.print("===WURDE AUF");
@@ -154,7 +172,17 @@ void ElementDoBlinkToSmooth::now()
     {
         if(functionTimer+velocity < millis())
         {   
-            acceleration = velocity/30;
+            if(velocity>100){
+                acceleration = velocity*0.1;
+            }
+            else if(velocity>75){
+                acceleration = velocity*0.04;
+            }else if(velocity>50){
+                acceleration = velocity*0.01;
+            }else {
+                acceleration = velocity*0.005;
+            }
+            
             functionElement->blinken();
             functionCount++;
             functionTimer = millis();
@@ -184,6 +212,10 @@ void ElementDoPulseUp::now()
                 activated = 0;
                 functionCount = 0;
             }
+//            Serial.print("======");
+//            Serial.print(counts);
+//            Serial.print("======");
+//            Serial.println(functionElement->getBrightness());
         }
     }
 }
@@ -202,6 +234,10 @@ void ElementDoPulseDown::now()
                 activated = false;
                 functionCount = 0;
             }
+//            Serial.print("======");
+//            Serial.print(functionCount);
+//            Serial.print("======");
+//            Serial.println(functionElement->getBrightness());
         }
     }
 }

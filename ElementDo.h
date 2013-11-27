@@ -76,24 +76,39 @@ private:
     int gruen;
     int blau;
     Element *targetElement;
+    Element *startElement;
+    Farbe startFarbe;
+    Farbe zielFarbe;
     int mode;
+    int station;
 public:
     ElementDoSetTargetColor() : ElementDo("SetTargetColor-random")
     {
         mode = 0;
-    }    
-    ElementDoSetTargetColor(int rot, int gruen, int blau) : ElementDo("SetTargetColor-RGB")
+    }
+    ElementDoSetTargetColor(String hart) : ElementDo("SetTargetColor-HARDrandom")
     {
         mode = 1;
+    }   
+    ElementDoSetTargetColor(int rot, int gruen, int blau) : ElementDo("SetTargetColor-RGB")
+    {
+        mode = 2;
         this->rot = rot;
         this->gruen = gruen;
         this->blau = blau;
     }
     ElementDoSetTargetColor(Element *targetElement) : ElementDo("SetTargetColor-Element")
     {
-        mode = 2;
+        mode = 3;
         this->targetElement =  targetElement;
-    }   
+    }
+    ElementDoSetTargetColor(Element *startElement, Element *targetElement, int station) : ElementDo("Set-TargetColor-Spektrum")
+    {
+        mode = 4;
+        this->targetElement = targetElement;
+        this->startElement = startElement;
+        this->station = station;
+    }
     void now();
 };
 

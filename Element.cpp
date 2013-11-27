@@ -70,22 +70,26 @@ void Element::randomColor()
 void Element::pulseUp()
 {
     if(getBrightness()<255) increaseBrightness();
-    if(getBrightness()>25 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>50 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>40 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>70 && getBrightness()<255) increaseBrightness();
     if(getBrightness()>100 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>150 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>200 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>130 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>160 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>190 && getBrightness()<255) increaseBrightness();
+    if(getBrightness()>220 && getBrightness()<255) increaseBrightness();
     
     leuchten();
 }
 void Element::pulseDown()
 {
     if(getBrightness()>0) decreaseBrightness();
-    if(getBrightness()>25) decreaseBrightness();
-    if(getBrightness()>50) decreaseBrightness();
+    if(getBrightness()>40) decreaseBrightness();
+    if(getBrightness()>70) decreaseBrightness();
     if(getBrightness()>100) decreaseBrightness();
-    if(getBrightness()>150) decreaseBrightness();
-    if(getBrightness()>200) decreaseBrightness();
+    if(getBrightness()>130) decreaseBrightness();
+    if(getBrightness()>160) decreaseBrightness();
+    if(getBrightness()>190) decreaseBrightness();
+    if(getBrightness()>220) decreaseBrightness();
     
     leuchten();
 }
@@ -125,6 +129,18 @@ void Element::targetRandomColor()
     fGruen = farbe.gruen;
     fBlau = farbe.blau;
 }
+void Element::targetHardRandomColor()
+{
+    target.hardRandomColor();
+    
+    distRot = target.rot - farbe.rot;
+    distGruen = target.gruen - farbe.gruen;
+    distBlau = target.blau - farbe.blau;
+    
+    fRot = farbe.rot;
+    fGruen = farbe.gruen;
+    fBlau = farbe.blau;
+}
 void Element::goToColor()
 {
     fRot += distRot/256;
@@ -141,6 +157,10 @@ void Element::goToColor()
 Farbe Element::getFarbe()
 {
     return farbe;
+}
+Farbe Element::getTargetColor()
+{
+    return target;
 }
 int Element::getBrightness()
 {

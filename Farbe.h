@@ -18,6 +18,7 @@ class Farbe
     
     Farbe();
     void randomColor();
+    void hardRandomColor();
     void printFarbe();
 };
 

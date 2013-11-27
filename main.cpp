@@ -2,7 +2,7 @@
 #include "Element.h"
 #include "ElementDo.h"
 
-#define ARRAY_SIZE 18
+#define ARRAY_SIZE 22
 
 
 Element raute(2,3,4, "RAUTE");
@@ -36,7 +36,7 @@ void setup()
   Serial.begin(9600);
   
   delay(1000);
-  pulseFULL = 86;
+  pulseFULL = 93;
   goToColorFULL = 255;
 
   rauteSetup();
@@ -98,7 +98,10 @@ void rauteSetup()
   rauteArray[15] = new ElementDoNothing                 (random(1500));
   rauteArray[16] = new ElementDoPulseUp                 (random(10), pulseFULL);
   rauteArray[17] = new ElementDoGoToColor               (15, goToColorFULL);
-
+  rauteArray[18] = new ElementDoSetTargetColor          ("hart");
+  rauteArray[19] = new ElementDoGoToColor               (20, goToColorFULL);
+  rauteArray[20] = new ElementDoNothing                 (10000);
+  rauteArray[21] = new ElementDoPulseDown               (random(80,300), pulseFULL);
   setArrayFunctionElement(rauteArray, &raute, ARRAY_SIZE);
   setArrayObservers(rauteArray, ARRAY_SIZE);
   rauteArray[0]->activate();
@@ -112,10 +115,12 @@ void rauteSetup()
   rauteArray[14]->setObserver(letArray[7], 1);
   rauteArray[14]->setObserver(freedomArray[6], 2);
   rauteArray[14]->setObserver(ringArray[7], 3);
+  rauteArray[18]->setObserver(ringArray[11], 0);
 }
 
 void letSetup()
 {
+  randomSeed(analogRead(0));
   let.setFarbe(255,255,255);
   let.setBrightness(255);
   
@@ -130,13 +135,17 @@ void letSetup()
   letArray[8] = new ElementDoNothing                  (random (1500));
   letArray[9] = new ElementDoPulseUp                  (random(10), pulseFULL); 
   letArray[10] = new ElementDoGoToColor               (15, goToColorFULL);
-  letArray[11] = new ElementDoNothing                 (1);
-  letArray[12] = new ElementDoNothing                 (1);
-  letArray[13] = new ElementDoNothing                 (1);
-  letArray[14] = new ElementDoNothing                 (1);
+  letArray[11] = new ElementDoSetTargetColor          (&raute, &ring, 1);
+  letArray[12] = new ElementDoGoToColor               (20, goToColorFULL);
+  letArray[13] = new ElementDoNothing                 (10000);
+  letArray[14] = new ElementDoPulseDown               (random(80,300), pulseFULL);
   letArray[15] = new ElementDoNothing                 (1);
   letArray[16] = new ElementDoNothing                 (1);
   letArray[17] = new ElementDoNothing                 (1);
+  letArray[18] = new ElementDoNothing                 (1);
+  letArray[19] = new ElementDoNothing                 (1);
+  letArray[20] = new ElementDoNothing                 (1);
+  letArray[21] = new ElementDoNothing                 (1);
   
   setArrayFunctionElement(letArray, &let, ARRAY_SIZE);
   setArrayObservers(letArray, ARRAY_SIZE);
@@ -145,6 +154,9 @@ void letSetup()
   letArray[4]->deleteObserver();       //freedom soll nach raute und ring auch langsam runterfahren
   letArray[5]->deleteObserver();
   letArray[6]->deleteObserver();
+  letArray[11]->setObserver(rauteArray[19], 1);
+  letArray[11]->setObserver(freedomArray[11], 2);
+  letArray[11]->setObserver(ringArray[12], 3);
 }
 
 void freedomSetup()
@@ -162,14 +174,18 @@ void freedomSetup()
   freedomArray[7] = new ElementDoNothing                  (random(1500));
   freedomArray[8] = new ElementDoPulseUp                  (random(10), pulseFULL);
   freedomArray[9] = new ElementDoGoToColor                (15, goToColorFULL);
-  freedomArray[10] = new ElementDoNothing                 (1);
-  freedomArray[11] = new ElementDoNothing                 (1);
-  freedomArray[12] = new ElementDoNothing                 (1);
-  freedomArray[13] = new ElementDoNothing                 (1);
+  freedomArray[10] = new ElementDoSetTargetColor          (&raute, &ring, 2);
+  freedomArray[11] = new ElementDoGoToColor               (20, goToColorFULL);
+  freedomArray[12] = new ElementDoNothing                 (10000);
+  freedomArray[13] = new ElementDoPulseDown               (random(80,300), pulseFULL);
   freedomArray[14] = new ElementDoNothing                 (1);
   freedomArray[15] = new ElementDoNothing                 (1);
   freedomArray[16] = new ElementDoNothing                 (1);
   freedomArray[17] = new ElementDoNothing                 (1);
+  freedomArray[18] = new ElementDoNothing                 (1);
+  freedomArray[19] = new ElementDoNothing                 (1);
+  freedomArray[20] = new ElementDoNothing                 (1);
+  freedomArray[21] = new ElementDoNothing                 (1);
 
   
   setArrayFunctionElement(freedomArray, &freedom, ARRAY_SIZE);
@@ -180,6 +196,7 @@ void freedomSetup()
   freedomArray[4]->setObserver(letArray[5], 0);            //let und ring sollen ganz runter pulsen
   freedomArray[4]->setObserver(ringArray[5], 1);
   freedomArray[5]->deleteObserver();
+  freedomArray[10]->setObserver(letArray[11], 0);
 }
 
 void ringSetup()
@@ -198,14 +215,18 @@ void ringSetup()
   ringArray[8] = new ElementDoNothing                  (random(1500));
   ringArray[9] = new ElementDoPulseUp                  (random(10), pulseFULL);
   ringArray[10] = new ElementDoGoToColor               (15, goToColorFULL);
-  ringArray[11] = new ElementDoNothing                 (1);
-  ringArray[12] = new ElementDoNothing                 (1);
-  ringArray[13] = new ElementDoNothing                 (1);
-  ringArray[14] = new ElementDoNothing                 (1);
+  ringArray[11] = new ElementDoSetTargetColor          ("hart");
+  ringArray[12] = new ElementDoGoToColor               (20, goToColorFULL);
+  ringArray[13] = new ElementDoNothing                 (10000);
+  ringArray[14] = new ElementDoPulseDown               (random(80,300), pulseFULL);
   ringArray[15] = new ElementDoNothing                 (1);
   ringArray[16] = new ElementDoNothing                 (1);
   ringArray[17] = new ElementDoNothing                 (1);
-  
+  ringArray[18] = new ElementDoNothing                 (1);
+  ringArray[19] = new ElementDoNothing                 (1);
+  ringArray[20] = new ElementDoNothing                 (1);
+  ringArray[21] = new ElementDoNothing                 (1);
+
   setArrayFunctionElement(ringArray, &ring, ARRAY_SIZE);
   setArrayObservers(ringArray, ARRAY_SIZE);
   ringArray[0]->activate();
@@ -213,6 +234,7 @@ void ringSetup()
   ringArray[4]->setObserver(freedomArray[4], 0);        //freedom soll ganz runter pulsen
   ringArray[5]->setObserver(rauteArray[4], 0);          //raute blinksequenz startet
   ringArray[6]->deleteObserver();
+  ringArray[11]->setObserver(freedomArray[10], 0);
 }
 
 

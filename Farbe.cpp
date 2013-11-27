@@ -26,6 +26,16 @@ void Farbe::randomColor()
         randomColor();
     }
 }
+void Farbe::hardRandomColor()
+{
+    rot = random(256);
+    gruen = random(256);
+    blau = random(256);
+    if((rot<220 && gruen<220 && blau<220) || (rot>10 && gruen>10 && blau>10))
+    {
+        hardRandomColor();
+    }
+}
 
 void Farbe::printFarbe()
 {
