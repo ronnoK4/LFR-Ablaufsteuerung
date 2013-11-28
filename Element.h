@@ -46,7 +46,7 @@ class Element
     
     Farbe getFarbe();
     Farbe getTargetColor();
-    int getBrightness();
+    double getBrightness();
     String getName();
     
     void setFarbe(int r, int g, int b);
@@ -56,7 +56,7 @@ class Element
     void setTargetColor(int rot, int gruen, int blau);
     void targetRandomColor();
     void targetHardRandomColor();
-    void setBrightness(int wert);
+    void setBrightness(double wert);
     void increaseBrightness();
     void decreaseBrightness();
 };

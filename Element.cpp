@@ -69,27 +69,41 @@ void Element::randomColor()
 
 void Element::pulseUp()
 {
-    if(getBrightness()<255) increaseBrightness();
-    if(getBrightness()>40 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>70 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>100 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>130 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>160 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>190 && getBrightness()<255) increaseBrightness();
-    if(getBrightness()>220 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>40 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>70 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>100 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>130 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>160 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>190 && getBrightness()<255) increaseBrightness();
+//    if(getBrightness()>220 && getBrightness()<255) increaseBrightness();
+    
+    farbe.brightness += exp((farbe.brightness-30)/100);
+        if(farbe.brightness>255)
+        farbe.brightness=255;
+    
+//    Serial.print("======");
+//    Serial.println(farbe.brightness);
     
     leuchten();
 }
 void Element::pulseDown()
 {
-    if(getBrightness()>0) decreaseBrightness();
-    if(getBrightness()>40) decreaseBrightness();
-    if(getBrightness()>70) decreaseBrightness();
-    if(getBrightness()>100) decreaseBrightness();
-    if(getBrightness()>130) decreaseBrightness();
-    if(getBrightness()>160) decreaseBrightness();
-    if(getBrightness()>190) decreaseBrightness();
-    if(getBrightness()>220) decreaseBrightness();
+//    if(getBrightness()>0) decreaseBrightness();
+//    if(getBrightness()>40) decreaseBrightness();
+//    if(getBrightness()>70) decreaseBrightness();
+//    if(getBrightness()>100) decreaseBrightness();
+//    if(getBrightness()>130) decreaseBrightness();
+//    if(getBrightness()>160) decreaseBrightness();
+//    if(getBrightness()>190) decreaseBrightness();
+//    if(getBrightness()>220) decreaseBrightness();
+    
+    farbe.brightness -= exp((farbe.brightness-30)/100);
+    if(farbe.brightness<0)
+        farbe.brightness=0;
+    
+//    Serial.print("======");
+//    Serial.println(farbe.brightness);
     
     leuchten();
 }
@@ -162,7 +176,7 @@ Farbe Element::getTargetColor()
 {
     return target;
 }
-int Element::getBrightness()
+double Element::getBrightness()
 {
     return farbe.brightness;
 }
@@ -184,7 +198,7 @@ void Element::farbeRandomColor()
 {
     farbe.randomColor();
 }
-void Element::setBrightness(int wert)
+void Element::setBrightness(double wert)
 {
     if (0<=wert && wert<=255)
     {

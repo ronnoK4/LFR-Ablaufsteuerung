@@ -2,7 +2,7 @@
 #include "Element.h"
 #include "ElementDo.h"
 
-#define ARRAY_SIZE 22
+#define ARRAY_SIZE 27
 
 
 Element raute(2,3,4, "RAUTE");
@@ -36,7 +36,7 @@ void setup()
   Serial.begin(9600);
   
   delay(1000);
-  pulseFULL = 93;
+  pulseFULL = 127;
   goToColorFULL = 255;
 
   rauteSetup();
@@ -44,13 +44,13 @@ void setup()
   freedomSetup();
   ringSetup();
 
-  lastElement.setLastObservers(rauteArray[0], letArray[0], freedomArray[0], ringArray[0]);
+  lastElement.setLastObservers(rauteArray[22], letArray[22], freedomArray[22], ringArray[22]);
 }
 
 void loop()
 {
 //  Serial.println("loop");
-  for(int i=0; i<ARRAY_SIZE; i++)
+  for(int i=22; i<ARRAY_SIZE; i++)
   {
     rauteArray[i]->now();
     letArray[i]->now();
@@ -102,13 +102,21 @@ void rauteSetup()
   rauteArray[19] = new ElementDoGoToColor               (20, goToColorFULL);
   rauteArray[20] = new ElementDoNothing                 (10000);
   rauteArray[21] = new ElementDoPulseDown               (random(80,300), pulseFULL);
+  
+  //====================2. Abschnitt============================================
+  
+  rauteArray[22] = new ElementDoPulseUp               (1, pulseFULL);
+  rauteArray[23] = new ElementDoPulseDown             (1, pulseFULL);
+  rauteArray[24] = new ElementDoPulseUp               (2, pulseFULL*0.5);
+  rauteArray[25] = new ElementDoPulseDown             (2, pulseFULL*0.5);
+  rauteArray[26] = new ElementDoNothing               (800);
+  
+  
   setArrayFunctionElement(rauteArray, &raute, ARRAY_SIZE);
   setArrayObservers(rauteArray, ARRAY_SIZE);
-  rauteArray[0]->activate();
+  rauteArray[22]->activate();
   
-  rauteArray[3]->deleteObserver();
-  rauteArray[21]->setObserver(rauteArray[23], 1);
-  rauteArray[22]->deleteObserver();  
+  rauteArray[3]->deleteObserver(); 
   rauteArray[4]->setObserver(letArray[6], 1);
   rauteArray[4]->setObserver(freedomArray[5], 2);
   rauteArray[4]->setObserver(ringArray[6], 3);
@@ -116,7 +124,13 @@ void rauteSetup()
   rauteArray[14]->setObserver(freedomArray[6], 2);
   rauteArray[14]->setObserver(ringArray[7], 3);
   rauteArray[18]->setObserver(ringArray[11], 0);
-}
+  
+  //====================2. Abschnitt============================================
+
+  
+
+
+ }
 
 void letSetup()
 {
@@ -147,9 +161,17 @@ void letSetup()
   letArray[20] = new ElementDoNothing                 (1);
   letArray[21] = new ElementDoNothing                 (1);
   
+  //====================2. Abschnitt============================================
+  
+  letArray[22] = new ElementDoPulseUp               (1, pulseFULL);
+  letArray[23] = new ElementDoPulseDown             (1, pulseFULL);
+  letArray[24] = new ElementDoPulseUp               (2, pulseFULL*0.5);
+  letArray[25] = new ElementDoPulseDown             (2, pulseFULL*0.5);
+  letArray[26] = new ElementDoNothing               (800);
+  
   setArrayFunctionElement(letArray, &let, ARRAY_SIZE);
   setArrayObservers(letArray, ARRAY_SIZE);
-  letArray[0]->activate();
+  letArray[22]->activate();
   
   letArray[4]->deleteObserver();       //freedom soll nach raute und ring auch langsam runterfahren
   letArray[5]->deleteObserver();
@@ -157,6 +179,11 @@ void letSetup()
   letArray[11]->setObserver(rauteArray[19], 1);
   letArray[11]->setObserver(freedomArray[11], 2);
   letArray[11]->setObserver(ringArray[12], 3);
+  
+  //====================2. Abschnitt============================================
+
+  
+
 }
 
 void freedomSetup()
@@ -187,16 +214,28 @@ void freedomSetup()
   freedomArray[20] = new ElementDoNothing                 (1);
   freedomArray[21] = new ElementDoNothing                 (1);
 
+  //====================2. Abschnitt============================================
+  
+  freedomArray[22] = new ElementDoPulseUp               (1, pulseFULL);
+  freedomArray[23] = new ElementDoPulseDown             (1, pulseFULL);
+  freedomArray[24] = new ElementDoPulseUp               (2, pulseFULL*0.5);
+  freedomArray[25] = new ElementDoPulseDown             (2, pulseFULL*0.5);
+  freedomArray[26] = new ElementDoNothing               (800);
+
   
   setArrayFunctionElement(freedomArray, &freedom, ARRAY_SIZE);
   setArrayObservers(freedomArray, ARRAY_SIZE);
-  freedomArray[0]->activate();
+  freedomArray[22]->activate();
   
   freedomArray[3]->deleteObserver();                       //wird von letArray[4] gesetzt
   freedomArray[4]->setObserver(letArray[5], 0);            //let und ring sollen ganz runter pulsen
   freedomArray[4]->setObserver(ringArray[5], 1);
   freedomArray[5]->deleteObserver();
   freedomArray[10]->setObserver(letArray[11], 0);
+  
+  //====================2. Abschnitt============================================
+  
+
 }
 
 void ringSetup()
@@ -226,15 +265,26 @@ void ringSetup()
   ringArray[19] = new ElementDoNothing                 (1);
   ringArray[20] = new ElementDoNothing                 (1);
   ringArray[21] = new ElementDoNothing                 (1);
+  
+  //====================2. Abschnitt============================================
+  
+  ringArray[22] = new ElementDoPulseUp               (1, pulseFULL);
+  ringArray[23] = new ElementDoPulseDown             (1, pulseFULL);
+  ringArray[24] = new ElementDoPulseUp               (2, pulseFULL*0.5);
+  ringArray[25] = new ElementDoPulseDown             (2, pulseFULL*0.5);
+  ringArray[26] = new ElementDoNothing               (800);
 
   setArrayFunctionElement(ringArray, &ring, ARRAY_SIZE);
   setArrayObservers(ringArray, ARRAY_SIZE);
-  ringArray[0]->activate();
+  ringArray[22]->activate();
   
   ringArray[4]->setObserver(freedomArray[4], 0);        //freedom soll ganz runter pulsen
   ringArray[5]->setObserver(rauteArray[4], 0);          //raute blinksequenz startet
   ringArray[6]->deleteObserver();
   ringArray[11]->setObserver(freedomArray[10], 0);
+  
+  //====================2. Abschnitt============================================
+
 }
 
 

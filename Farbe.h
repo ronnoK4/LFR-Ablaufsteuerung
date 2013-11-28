@@ -14,7 +14,7 @@ class Farbe
     int rot;
     int gruen;
     int blau;
-    int brightness;
+    double brightness;
     
     Farbe();
     void randomColor();
